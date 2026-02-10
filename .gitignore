@@ -1,6 +1,8 @@
 
 # VS
 .vs/
+.vscode/
 
 # Exe
 x64/
+build/
