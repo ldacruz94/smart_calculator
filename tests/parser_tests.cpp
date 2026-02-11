@@ -22,3 +22,10 @@ TEST_CASE("multi-digit numbers") {
     auto rpn = p.ToRPN("2323+123/4*5+12");
     REQUIRE(p.EvaluateRPN(rpn) == Catch::Approx(2488.75));
 }
+
+TEST_CASE("parantheses work") {
+    Parser p;
+
+    auto rpn = p.ToRPN("30+10+5*12+55x(45-2+(23-3))");
+    REQUIRE(p.EvaluateRPN(rpn) == 3565);
+}
