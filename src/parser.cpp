@@ -19,6 +19,13 @@ std::vector<std::string> Parser::ToRPN(const std::string& expression) {
     std::vector<std::string> output;
     std::string number;
 
+    auto flush_number = [&]() {
+        if (!number.empty()) {
+            output.push_back(number);
+            number.clear();
+        }
+    };
+
     for (char c : expression) {
 
         if (std::isspace(static_cast<unsigned char>(c))) {
@@ -27,13 +34,26 @@ std::vector<std::string> Parser::ToRPN(const std::string& expression) {
         if (std::isdigit(static_cast<unsigned char>(c))) {
             number += c;
         }
-        else if (std::strchr("+-*x/", c)) {
-            if (!number.empty()) {
-                output.push_back(number);
-                number.clear();
+        else if (c == '(') {
+            flush_number();
+            operators.push(c);
+        }
+        else if (c == ')') {
+            flush_number();
+             while (!operators.empty() && operators.top() != '(') {
+                output.push_back(std::string(1, operators.top()));
+                operators.pop();
             }
+            if (operators.empty()) {
+                throw std::runtime_error("Missing open parantheses: (");
+            }
+            operators.pop();
+        }
 
-            while (!operators.empty() && Prec(operators.top()) >= Prec(c)) {
+        else if (std::strchr("+-*x/", c)) {
+            flush_number();
+
+            while (!operators.empty() && operators.top() != '(' && Prec(operators.top()) >= Prec(c)) {
                 output.push_back(std::string(1, operators.top()));
                 operators.pop();
             }
@@ -41,10 +61,7 @@ std::vector<std::string> Parser::ToRPN(const std::string& expression) {
         }
     }
 
-    if (!number.empty()) {
-        output.push_back(number);
-        number.clear();
-    }
+    flush_number();
 
     while (!operators.empty()) {
         output.push_back(std::string(1, operators.top()));
