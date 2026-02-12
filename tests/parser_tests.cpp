@@ -12,8 +12,8 @@ TEST_CASE("basic math") {
 TEST_CASE("precedence works") {
     Parser p;
 
-    auto rpn = p.ToRPN("3+4*5");
-    REQUIRE(p.EvaluateRPN(rpn) == 23);
+    auto rpn = p.ToRPN("3+4*5+4^2");
+    REQUIRE(p.EvaluateRPN(rpn) == 39);
 }
 
 TEST_CASE("multi-digit numbers") {
