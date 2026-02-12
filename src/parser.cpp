@@ -5,12 +5,14 @@
 #include <stack>
 #include <vector>
 #include <string>
+#include <cmath>
 
 Parser::Parser() {}
 
 int Parser::Prec(char op) {
     if (op == '+' || op == '-') return 1;
     if (op == '*' || op == 'x' || op == '/') return 2;
+    if (op == '^') return 3;
     return 0; 
 }
 
@@ -50,7 +52,7 @@ std::vector<std::string> Parser::ToRPN(const std::string& expression) {
             operators.pop();
         }
 
-        else if (std::strchr("+-*x/", c)) {
+        else if (std::strchr("+-*x/^", c)) {
             flush_number();
 
             while (!operators.empty() && operators.top() != '(' && Prec(operators.top()) >= Prec(c)) {
@@ -89,6 +91,7 @@ double Parser::EvaluateRPN(const std::vector<std::string>& rpn) {
                 case '-': result = a - b; break;
                 case 'x': case '*': result = a * b; break;
                 case '/': result = a / b; break;
+                case '^': result = pow(a, b); break;
                 default: throw std::runtime_error("Uknown operator");
             }
 
