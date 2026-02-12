@@ -25,6 +25,10 @@ add_executable(parser_tests
   src/parser.cpp
 )
 
+enable_testing()
+
+add_test(NAME parser_tests COMMAND parser_tests)
+
 target_link_libraries(parser_tests PRIVATE Catch2::Catch2WithMain)
 
 target_include_directories(calculator PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
