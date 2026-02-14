@@ -26,6 +26,6 @@ TEST_CASE("multi-digit numbers") {
 TEST_CASE("parantheses work") {
     Parser p;
 
-    auto rpn = p.ToRPN("30+10+5*12+55x(45-2+(23-3))");
-    REQUIRE(p.EvaluateRPN(rpn) == 3565);
+    auto rpn = p.ToRPN("(((((3 + 5) * 2) - 4) / 3) + 7)");
+    REQUIRE(p.EvaluateRPN(rpn) == 11);
 }
