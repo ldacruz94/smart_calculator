@@ -6,3 +6,6 @@
 # Exe
 x64/
 build/
+
+# History
+calc_history.txt

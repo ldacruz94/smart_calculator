@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include "history.hpp"
 #include "calculator.hpp"
 #include "parser.hpp"
 
@@ -10,6 +11,7 @@ static void PrintHelp() {
         << "\nCommands:\n"
         << "  help            Show this help\n"
         << "  exit | quit     Exit the calculator\n"
+        << "  history         Shows history of past commands\n"
         << "\nMemory:\n"
         << "  M+ <number>     Add number to memory\n"
         << "  M- <number>     Subtract number from memory\n"
@@ -31,6 +33,7 @@ static std::string Trim(std::string s) {
 int main() {
     Calculator calculator;
     Parser parser;
+    HistoryHandler history;
 
     PrintHelp();
     std::cout << "Smart Calculator (type 'help' for commands, 'exit' to quit)\n";
@@ -49,6 +52,16 @@ int main() {
         if (input == "exit" || input == "quit") {
             std::cout << "Goodbye.\n";
             break;
+        }
+
+        int r = history.SaveToHistory(input);
+        if (r == 1) {
+            std::cout << "Warning: There was an issue in saving the command to history.";
+        }
+
+        if (input == "history") {
+            history.DisplayHistory();
+            continue;
         }
 
         if (input == "help") {
