@@ -1,26 +1,21 @@
+#pragma once
 
+#include "calculator.hpp"
 
-#include <iostream>
-#include <string>
-#include "parser.hpp"
+Calculator::Calculator(){}
 
+void Calculator::MPlus(double x) { 
+    memory += x; 
+}
 
-int main() {
-    bool prompt = true;
+void Calculator::MMinus(double x) { 
+    memory -= x; 
+}
 
-    while (prompt) {
-        std::cout << "Enter your math expression (or 'exit' to quit): ";
-        std::string expression;
+double Calculator::MReturn() { 
+    return memory; 
+}
 
-        std::getline(std::cin, expression);
-
-        if (expression == "exit") {
-            prompt = false;
-        }
-
-        Parser parser;
-        std::vector<std::string> rpn = parser.ToRPN(expression);
-        double result = parser.EvaluateRPN(rpn);
-        std::cout << "Result: " << result << std::endl; 
-    }
+void Calculator::MClear() {
+    memory = 0;
 }
