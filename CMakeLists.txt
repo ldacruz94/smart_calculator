@@ -17,6 +17,7 @@ FetchContent_MakeAvailable(catch2)
 
 add_executable(calculator
   src/main.cpp
+  src/history.cpp
   src/calculator.cpp
   src/parser.cpp
 )
