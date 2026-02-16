@@ -17,7 +17,7 @@ Another neat feature I thought of was to add a history of the operations used in
 
 # Learnings
 
-The memory functions and history were pretty simple and straight forward, but man parsing through the expression
+The memory functions and history were pretty simple and straight forward, but parsing through the expression
 was a little more convoluted than I thought.
 
 At first, I wanted to try a few brute force attempts to parse through the expressions but the code was just meh, so I looked up if there was any algorithms that was used to solve this sort of problem.
